@@ -1,4 +1,4 @@
-import { Component, State, h } from '@stencil/core';
+import { Component, Prop, h } from '@stencil/core';
 
 @Component({
   tag: 'app-profile',
@@ -6,57 +6,8 @@ import { Component, State, h } from '@stencil/core';
 })
 export class AppProfile {
 
-  constructor() {
-    this.onInputHandler = this.onInputHandler.bind(this);
-  }
-
-  originalState = {
-    categories: [
-      {
-        name: 'food',
-        items: [
-          'pizza',
-          'hamburguer',
-          'pasta',
-          'taco',
-          'burrito',
-        ]
-      },
-      {
-        name: 'movie genre',
-        items: [
-          'drama',
-          'thriller',
-          'terror',
-          'action',
-          'adventure',
-        ]
-      },
-      {
-        name: 'whatever',
-        items: [
-          'one',
-          'two',
-          'three',
-        ]
-      }
-    ]
-  };
-
-  @State() state = this.originalState;
-
-  onInputHandler(event, name: string) {
-    console.log(name, event.target.value);
-    console.log(this.state);
-    const categories = this.state.categories.map(item => {
-      if (item.name === name) {
-        console.log(`updating ${name} category`);
-        return { name, items: event.target.value.split(', ') }
-      }
-      return item;
-    });
-    this.state = { categories };
-  }
+  @Prop() categories;
+  @Prop() categoryChangeHandler;
 
   render() {
     return [
@@ -74,12 +25,12 @@ export class AppProfile {
           You can edit here the items for each category:
         </p>
 
-        {this.state.categories.map(category => (
-          <ion-item>
+        {this.categories.map((category, index) => (
+          <ion-item key={index}>
             <ion-label position="stacked">{category.name.toUpperCase()}</ion-label>
             <ion-input
               value={category.items.join(', ')}
-              onInput={(event) => this.onInputHandler(event, category.name)}
+              onInput={(event) => this.categoryChangeHandler(event, category.name)}
             ></ion-input>
           </ion-item>
         ))}

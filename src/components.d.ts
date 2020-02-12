@@ -10,9 +10,16 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface AppCategoryButton {}
-  interface AppHome {}
-  interface AppProfile {}
+  interface AppCategoryButton {
+    'categories': any;
+  }
+  interface AppHome {
+    'categories': any;
+  }
+  interface AppProfile {
+    'categories': any;
+    'categoryChangeHandler': any;
+  }
   interface AppRoot {}
 }
 
@@ -51,9 +58,16 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface AppCategoryButton {}
-  interface AppHome {}
-  interface AppProfile {}
+  interface AppCategoryButton {
+    'categories'?: any;
+  }
+  interface AppHome {
+    'categories'?: any;
+  }
+  interface AppProfile {
+    'categories'?: any;
+    'categoryChangeHandler'?: any;
+  }
   interface AppRoot {}
 
   interface IntrinsicElements {
