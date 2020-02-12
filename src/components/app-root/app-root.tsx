@@ -6,10 +6,6 @@ import { Component, State, h } from '@stencil/core';
 })
 export class AppRoot {
 
-  constructor() {
-    this.categoryChangeHandler = this.categoryChangeHandler.bind(this);
-  }
-
   originalState = {
     categories: [
       {
@@ -43,19 +39,18 @@ export class AppRoot {
     ]
   };
 
-  @State() state = this.originalState;
+  @State() state;
 
-  categoryChangeHandler(event, name: string) {
-    console.log(name, event.target.value);
-    console.log(this.state.categories);
-    const categories = this.state.categories.map(item => {
-      if (item.name === name) {
-        console.log(`updating ${name} category`);
-        return { name, items: event.target.value.split(', ') }
-      }
-      return item;
-    });
-    this.state = { categories };
+  constructor() {
+    this.setCategories = this.setCategories.bind(this);
+    const stored = localStorage.getItem('app-state');
+    this.state = stored ? JSON.parse(stored) : this.originalState;
+  }
+
+  setCategories(categories) {
+    console.log('saved categories');
+    this.state = { ...this.state, categories };
+    localStorage.setItem('app-state', JSON.stringify(this.state));
   }
 
   render() {
@@ -63,7 +58,7 @@ export class AppRoot {
       <ion-app>
         <ion-router useHash={false}>
           <ion-route url="/" component="app-home"  componentProps={{ categories: this.state.categories }} />
-          <ion-route url="/settings" component="app-profile" componentProps={{ categories: this.state.categories, categoryChangeHandler: this.categoryChangeHandler }} />
+          <ion-route url="/settings" component="app-profile" componentProps={{ categories: this.state.categories, setCategories: this.setCategories }} />
         </ion-router>
         <ion-nav />
       </ion-app>

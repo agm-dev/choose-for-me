@@ -18,7 +18,7 @@ export namespace Components {
   }
   interface AppProfile {
     'categories': any;
-    'categoryChangeHandler': any;
+    'setCategories': any;
   }
   interface AppRoot {}
 }
@@ -66,7 +66,7 @@ declare namespace LocalJSX {
   }
   interface AppProfile {
     'categories'?: any;
-    'categoryChangeHandler'?: any;
+    'setCategories'?: any;
   }
   interface AppRoot {}
 
