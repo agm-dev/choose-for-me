@@ -1,8 +1,8 @@
 {
   "name": "choose-for-me",
-  "private": true,
+  "private": false,
   "version": "0.0.1",
-  "description": "choose-for-me",
+  "description": "Choose random items from different categories",
   "license": "MIT",
   "files": [
     "dist/"
